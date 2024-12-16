@@ -1,0 +1,11 @@
+#!name= SoundCloudGo
+#!desc= Quocchien
+# Shadowrocket Configuration - Alight Motion
+# Cập nhật: 2024-12-06
+# Bản Quyền Thuộc Về Quốc Chiến ❤️‍🩹
+# Tham Gia Nhóm Telegram: https://t.me/shadowrocketunlockproapps
+
+[Script]
+SoundCloudGo+=type=http-response,pattern=https://api-mobile.soundcloud.com/configuration/ios,requires-body=1,script-path= https://raw.githubusercontent.com/quocchienn/Make/refs/heads/crack/soundcloud.js
+[MITM]
+hostname= %APPEND% api-mobile.soundcloud.com
