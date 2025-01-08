@@ -1,0 +1,44 @@
+#!name=📺 BiliBili: 🛡️ ADBlock
+#!desc=Quốc Chiến
+#!date=2025-08-1 20:06:15
+#!version=0.6.17
+
+[MITM]
+hostname = manga.bilibili.com, api.live.bilibili.com, api.vc.bilibili.com, app.bilibili.com, app.biliapi.net, api.bilibili.com, api.biliapi.net, grpc.biliapi.net
+
+[URL Rewrite]
+^https?:\/\/(grpc|app)\.bili(bili\.com|api\.net)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$ reject
+^https?:\/\/api\.vc\.bilibili\.com\/search_svr\/v\d\/Search\/recommend_words reject-dict
+^https?:\/\/api\.vc\.bilibili\.com\/topic_svr\/v1\/topic_svr reject-dict
+^https?:\/\/api\.vc\.bilibili\.com\/dynamic_svr\/v1\/dynamic_svr\/mix_uplist reject-dict
+^https?:\/\/api\.bili(bili\.com|api\.net)\/pgc\/season\/app\/related\/recommend\? reject-dict
+^https?:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/Flash reject-dict
+^https?:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/ListFlash reject-dict
+^https?:\/\/api\.live\.bilibili\.com\/xlive\/e-commerce-interface\/v1\/ecommerce-user\/get_shopping_info\? reject-dict
+
+[Script]
+# Request Scripts
+^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/feed\/index\? script-request-header 📺 BiliBili.ADBlock.request.json
+^https?:\/\/(grpc|app)\.bili(bili\.com|api\.net)\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus script-request-header 📺 BiliBili.ADBlock.request.json
+
+# Response Scripts
+^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/(splash\/(brand\/list|event\/list2|list|show)|feed\/index(\/story)?|search\/square) script-response-body 📺 BiliBili.ADBlock.response.json
+^https?:\/\/api\.bili(bili\.com|api\.net)\/pgc\/page\/(bangumi|cinema\/tab\?) script-response-body 📺 BiliBili.ADBlock.response.json
+^https?:\/\/api\.live\.bilibili\.com\/xlive\/app-room\/v1\/index\/getInfoByRoom script-response-body 📺 BiliBili.ADBlock.response.json
+^https?:\/\/(grpc|app)\.bili(bili\.com|api\.net)\/bilibili\.app\.playurl\.v1\.PlayURL\/PlayView$ script-response-body 📺 BiliBili.ADBlock.response.grpc
+^https:\/\/(grpc|app)\.bili(bili\.com|api\.net)\/bilibili\.community\.service\.dm\.v1\.DM\/(DmView|DmSegMobile) script-response-body 📺 BiliBili.ADBlock.response.grpc
+
+[Provider]
+script, 📺 BiliBili.ADBlock.request.json, https://github.com/BiliUniverse/ADBlock/releases/download/v0.6.17/request.bundle.js, interval=86400
+script, 📺 BiliBili.ADBlock.response.json, https://github.com/BiliUniverse/ADBlock/releases/download/v0.6.17/response.bundle.js, interval=86400
+script, 📺 BiliBili.ADBlock.response.grpc, https://github.com/BiliUniverse/ADBlock/releases/download/v0.6.17/response.bundle.js, interval=86400
+
+[Rule]
+DOMAIN-SUFFIX,manga.bilibili.com,REJECT
+DOMAIN-SUFFIX,api.live.bilibili.com,REJECT
+DOMAIN-SUFFIX,api.vc.bilibili.com,REJECT
+DOMAIN-SUFFIX,app.bilibili.com,REJECT
+DOMAIN-SUFFIX,app.biliapi.net,REJECT
+DOMAIN-SUFFIX,api.bilibili.com,REJECT
+DOMAIN-SUFFIX,grpc.biliapi.net,REJECT
+FINAL,DIRECT
